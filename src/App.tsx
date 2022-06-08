@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import { invoke } from "@tauri-apps/api/tauri";
+import { useEditable } from "use-editable";
+import "./App.css";
 
 function App() {
+  const [text, setText] = React.useState("Starting point");
+  const [markdown, setMarkdown] = React.useState("");
+
+  const editorRef = useRef(null);
+  useEditable(editorRef, setText);
+
+  React.useEffect(() => {
+    invoke("parse_md", { input: text }).then((result: any) => {
+      setMarkdown(result);
+    });
+  }, [text]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <body>
+        <div className="container">
+          <textarea ref={editorRef}>{text}</textarea>
+          <div dangerouslySetInnerHTML={{ __html: markdown }} />
+        </div>
+      </body>
     </div>
   );
 }
