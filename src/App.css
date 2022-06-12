@@ -19,6 +19,23 @@
   justify-content: space-around;
 }
 
+.textHolder {
+  width: calc(50vw - 2rem);
+  max-width: calc(50vw - 2rem);
+  min-width: calc(50vw - 2rem);
+  text-align: left;
+  padding-left: 2rem;
+}
+
+.previewHolder {
+
+  width: 50vw;
+  max-width: 50vw;
+  min-width: 50vw;
+  text-align: left;
+  line-height: 0.5rem;
+}
+
 .App-link {
   color: #61dafb;
 }
